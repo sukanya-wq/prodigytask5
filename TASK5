@@ -3,6 +3,8 @@ TASK5:
 pip install diffusers transformers torch pillow --quiet
 pip install transformers 
 pip install tensorflow
+pip install nltk
+pip install spacy
 
 from diffusers import StableDiffusionImg2ImgPipeline
 from PIL import Image

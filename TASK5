@@ -5,6 +5,7 @@ pip install transformers
 pip install tensorflow
 pip install nltk
 pip install spacy
+pip install BLIP transformers
 
 from diffusers import StableDiffusionImg2ImgPipeline
 from PIL import Image

@@ -1,6 +1,8 @@
 TASK5:
 
 pip install diffusers transformers torch pillow --quiet
+pip install transformers 
+pip install tensorflow
 
 from diffusers import StableDiffusionImg2ImgPipeline
 from PIL import Image

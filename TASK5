@@ -20,3 +20,5 @@ prompt = "Make this image in Van Gogh painting style"
 image = pipe(prompt=prompt, image=init_image, strength=0.75).images[0]
 
 image
+
+plt.plot()

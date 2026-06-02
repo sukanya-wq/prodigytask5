@@ -5,6 +5,7 @@ pip install diffusers transformers torch pillow --quiet
 from diffusers import StableDiffusionImg2ImgPipeline
 from PIL import Image
 import torch
+#starting the program
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -23,5 +24,6 @@ image
 
 plt.plot()
 plt.axis(off)
+
 
 #this will generate the output 

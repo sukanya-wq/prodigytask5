@@ -1,26 +1,38 @@
-TASK5: prodigy task5 challenge
+ now = Math.floor(Date.now() / 1000);
 
-pip install diffusers transformers torch pillow --quiet
-pip install transformers 
-pip install tensorflow
-pip install nltk
-pip install spacy
+  const appJWT = jwt.sign(
+    {
+      iat: now - 10,
+      exp: now + 300, // safe 5 min window
+      iss: Number(process.env.GITHUB_APP_ID),
+    },
+    privateKey,
+    { algorithm: "RS256" }
+  );
 
-from diffusers import StableDiffusionImg2ImgPipeline
-from PIL import Image
-import torch
+  console.log("JWT ISS:", process.env.GITHUB_APP_ID);
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+  return appJWT;
+}
 
-pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
-    "runwayml/stable-diffusion-v1-5"
-).to(device)
+/* =========================
+   GET INSTALLATION TOKEN
+========================= */
+export async function getInstallationToken(installationId) {
+  const appJWT = generateAppJWT();
 
-# Upload your content image in Colab first
-init_image = Image.open("content.jpg").convert("RGB").resize((512,512))
+  const res = await fetch(
+    `${GITHUB_API}/app/installations/${installationId}/access_tokens`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${appJWT}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    }
+  );
 
-prompt = "Make this image in Van Gogh painting style"
+  const text = await res.text();
 
-image = pipe(prompt=prompt, image=init_image, strength=0.75).images[0]
-
-image
+  console.log(
